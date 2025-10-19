@@ -20,6 +20,26 @@ public class Expression {
         numberSequence = input;
     }
 
+    public int getSum() {
+        String[] numbers = numberSequence.split("[" + new String(delimiters) + "]");
+        int sum = 0;
+        for (String numberStr : numbers) {
+            int number;
+            try {
+                number = Integer.parseInt(numberStr);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("String contains non-numeric value");
+            }
+
+            if (number <= 0) {
+                throw new IllegalArgumentException("Input number must be positive.");
+            }
+            sum += number;
+        }
+
+        return sum;
+    }
+
     public char[] getDelimiters() {
         return delimiters;
     }

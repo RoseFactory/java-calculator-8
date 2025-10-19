@@ -1,6 +1,7 @@
 package calculator;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +18,7 @@ class ExpressionTest {
         // then
         assertThat(expression.getDelimiters()).isEqualTo(new char[]{';'});
         assertThat(expression.getNumberSequence()).isEqualTo("1;2;3");
+        assertThat(expression.getSum()).isEqualTo(6);
     }
 
     @Test
@@ -30,5 +32,16 @@ class ExpressionTest {
         // then
         assertThat(expression.getDelimiters()).isEqualTo(new char[]{',', ':'});
         assertThat(expression.getNumberSequence()).isEqualTo("1,2:3");
+        assertThat(expression.getSum()).isEqualTo(6);
+    }
+
+    @Test
+    void 음수_입력() {
+        // given
+        String input = "-1,2,3";
+
+        // when, then
+        Expression expression = Expression.parse(input);
+        assertThatThrownBy(expression::getSum).isInstanceOf(IllegalArgumentException.class);
     }
 }
